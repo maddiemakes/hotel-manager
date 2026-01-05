@@ -2,15 +2,136 @@
 <html>
 
 <head>
+    <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <!-- Main CSS -->
     <link href="css/main.css" rel="stylesheet" type="text/css">
     <title>Hotel Manager</title>
-    <script type="text/javascript" src="js/hotel.js"></script>
 </head>
 
 <body>
-    <div></div>
+    <!-- Mode Toggle Switch -->
+    <div class="mode-toggle">
+        <label class="toggle-label">
+            <span class="mode-text">CLI</span>
+            <input type="checkbox" id="modeToggle">
+            <span class="toggle-slider"></span>
+            <span class="mode-text">GUI</span>
+        </label>
+    </div>
+
+    <div class="container">
+        <h1>Hotel Management System</h1>
+        
+        <!-- CLI Interface -->
+        <div id="cliInterface" class="interface-section active">
+            <div class="terminal">
+                <div id="output" class="output"></div>
+                <div class="input-line">
+                    <span class="prompt">&gt;</span>
+                    <input type="text" id="commandInput" class="command-input" autofocus autocomplete="off">
+                </div>
+            </div>
+            <div class="help-section">
+                <h3>Available Commands:</h3>
+                <ul>
+                    <li><strong>add room &lt;number&gt;</strong> - Add a new room</li>
+                    <li><strong>delete room &lt;number&gt;</strong> - Delete a room</li>
+                    <li><strong>add reservation &lt;room&gt; &lt;arrival&gt; &lt;departure&gt; &lt;guest name&gt;</strong> - Add reservation (date format: MM/DD/YYYY)</li>
+                    <li><strong>delete reservation &lt;room&gt; &lt;arrival&gt; &lt;departure&gt; &lt;guest name&gt;</strong> - Delete reservation</li>
+                    <li><strong>print reservations all</strong> - Show all reservations</li>
+                    <li><strong>print reservations room &lt;number&gt;</strong> - Show reservations for a room</li>
+                    <li><strong>print reservations guest &lt;name&gt;</strong> - Show reservations for a guest</li>
+                    <li><strong>print reservations arrival &lt;date&gt;</strong> - Show reservations by arrival date</li>
+                    <li><strong>print reservations departure &lt;date&gt;</strong> - Show reservations by departure date</li>
+                    <li><strong>clear</strong> - Clear the terminal</li>
+                    <li><strong>help</strong> - Show this help message</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- GUI Interface -->
+        <div id="guiInterface" class="interface-section">
+            <div class="gui-container">
+                <!-- Control Panel -->
+                <div class="control-panel">
+                    <div class="panel-section">
+                        <h3>Add Reservation</h3>
+                        <form id="addReservationForm">
+                            <input type="number" id="guiRoomNumber" placeholder="Room Number" required>
+                            <input type="text" id="guiArrivalDate" placeholder="Arrival (MM/DD/YYYY)" required>
+                            <input type="text" id="guiDepartureDate" placeholder="Departure (MM/DD/YYYY)" required>
+                            <input type="text" id="guiGuestName" placeholder="Guest Name" required>
+                            <button type="submit">Add Reservation</button>
+                        </form>
+                    </div>
+
+                    <div class="panel-section">
+                        <h3>Filters</h3>
+                        <div class="filter-controls">
+                            <select id="floorFilter">
+                                <option value="all">All Floors</option>
+                                <option value="1">Floor 1</option>
+                                <option value="2">Floor 2</option>
+                                <option value="3">Floor 3</option>
+                                <option value="4">Floor 4</option>
+                                <option value="5">Floor 5</option>
+                                <option value="6">Floor 6</option>
+                                <option value="7">Floor 7</option>
+                                <option value="8">Floor 8</option>
+                            </select>
+                            <select id="statusFilter">
+                                <option value="all">All Rooms</option>
+                                <option value="available">Available</option>
+                                <option value="occupied">Has Reservations</option>
+                            </select>
+                            <input type="text" id="searchGuest" placeholder="Search by guest name">
+                        </div>
+                    </div>
+
+                    <div class="panel-section">
+                        <h3>Statistics</h3>
+                        <div id="statistics" class="statistics">
+                            <div class="stat-item">
+                                <span class="stat-label">Total Rooms:</span>
+                                <span class="stat-value" id="totalRooms">0</span>
+                            </div>
+                            <div class="stat-item">
+                                <span class="stat-label">Total Reservations:</span>
+                                <span class="stat-value" id="totalReservations">0</span>
+                            </div>
+                            <div class="stat-item">
+                                <span class="stat-label">Rooms with Reservations:</span>
+                                <span class="stat-value" id="occupiedRooms">0</span>
+                            </div>
+                            <div class="stat-item">
+                                <span class="stat-label">Available Rooms:</span>
+                                <span class="stat-value" id="availableRooms">0</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Room Grid -->
+                <div class="room-grid-container">
+                    <h3>Rooms</h3>
+                    <div id="roomGrid" class="room-grid"></div>
+                </div>
+
+                <!-- Room Details Panel -->
+                <div id="roomDetailsPanel" class="room-details-panel">
+                    <div class="panel-header">
+                        <h3 id="roomDetailsTitle">Room Details</h3>
+                        <button id="closeDetailsBtn" class="close-btn">&times;</button>
+                    </div>
+                    <div id="roomDetailsContent" class="room-details-content">
+                        <p>Select a room to view details</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <script type="text/javascript" src="js/hotel.js"></script>
 </body>
 
 </html>
